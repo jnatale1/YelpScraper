@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		36465A4F178E51EA00744E7A /* BusinessesTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 36465A4D178E51EA00744E7A /* BusinessesTableView.m */; };
+		36465A50178E51EA00744E7A /* BusinessesTableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 36465A4E178E51EA00744E7A /* BusinessesTableView.xib */; };
+		36465A541790CC1D00744E7A /* AllListingsTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 36465A521790CC1C00744E7A /* AllListingsTableView.m */; };
+		36465A551790CC1D00744E7A /* AllListingsTableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 36465A531790CC1D00744E7A /* AllListingsTableView.xib */; };
 		369BA25C178CD4CD009C495F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 369BA25B178CD4CD009C495F /* UIKit.framework */; };
 		369BA25E178CD4CD009C495F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 369BA25D178CD4CD009C495F /* Foundation.framework */; };
 		369BA260178CD4CD009C495F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 369BA25F178CD4CD009C495F /* CoreGraphics.framework */; };
@@ -36,6 +40,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		36465A4C178E51EA00744E7A /* BusinessesTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BusinessesTableView.h; sourceTree = "<group>"; };
+		36465A4D178E51EA00744E7A /* BusinessesTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BusinessesTableView.m; sourceTree = "<group>"; };
+		36465A4E178E51EA00744E7A /* BusinessesTableView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BusinessesTableView.xib; sourceTree = "<group>"; };
+		36465A511790CC1C00744E7A /* AllListingsTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllListingsTableView.h; sourceTree = "<group>"; };
+		36465A521790CC1C00744E7A /* AllListingsTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllListingsTableView.m; sourceTree = "<group>"; };
+		36465A531790CC1D00744E7A /* AllListingsTableView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AllListingsTableView.xib; sourceTree = "<group>"; };
 		369BA258178CD4CD009C495F /* YelpScraper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YelpScraper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		369BA25B178CD4CD009C495F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		369BA25D178CD4CD009C495F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -122,6 +132,12 @@
 				369BA273178CD4CD009C495F /* MainStoryboard.storyboard */,
 				369BA276178CD4CD009C495F /* ViewController.h */,
 				369BA277178CD4CE009C495F /* ViewController.m */,
+				36465A4C178E51EA00744E7A /* BusinessesTableView.h */,
+				36465A4D178E51EA00744E7A /* BusinessesTableView.m */,
+				36465A4E178E51EA00744E7A /* BusinessesTableView.xib */,
+				36465A511790CC1C00744E7A /* AllListingsTableView.h */,
+				36465A521790CC1C00744E7A /* AllListingsTableView.m */,
+				36465A531790CC1D00744E7A /* AllListingsTableView.xib */,
 				369BA262178CD4CD009C495F /* Supporting Files */,
 			);
 			path = YelpScraper;
@@ -236,6 +252,8 @@
 				369BA270178CD4CD009C495F /* Default@2x.png in Resources */,
 				369BA272178CD4CD009C495F /* Default-568h@2x.png in Resources */,
 				369BA275178CD4CD009C495F /* MainStoryboard.storyboard in Resources */,
+				36465A50178E51EA00744E7A /* BusinessesTableView.xib in Resources */,
+				36465A551790CC1D00744E7A /* AllListingsTableView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -273,6 +291,8 @@
 				369BA268178CD4CD009C495F /* main.m in Sources */,
 				369BA26C178CD4CD009C495F /* AppDelegate.m in Sources */,
 				369BA278178CD4CE009C495F /* ViewController.m in Sources */,
+				36465A4F178E51EA00744E7A /* BusinessesTableView.m in Sources */,
+				36465A541790CC1D00744E7A /* AllListingsTableView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -453,6 +473,7 @@
 				369BA292178CD4CE009C495F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		369BA293178CD4CE009C495F /* Build configuration list for PBXNativeTarget "YelpScraperTests" */ = {
 			isa = XCConfigurationList;
@@ -461,6 +482,7 @@
 				369BA295178CD4CE009C495F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
