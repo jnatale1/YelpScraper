@@ -11,6 +11,10 @@
 		36465A50178E51EA00744E7A /* BusinessesTableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 36465A4E178E51EA00744E7A /* BusinessesTableView.xib */; };
 		36465A541790CC1D00744E7A /* AllListingsTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 36465A521790CC1C00744E7A /* AllListingsTableView.m */; };
 		36465A551790CC1D00744E7A /* AllListingsTableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 36465A531790CC1D00744E7A /* AllListingsTableView.xib */; };
+		3670F6AC179A0D4900EA5C21 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3670F6AB179A0D4900EA5C21 /* CoreLocation.framework */; };
+		3670F6AF179A139200EA5C21 /* loadingView.png in Resources */ = {isa = PBXBuildFile; fileRef = 3670F6AE179A139200EA5C21 /* loadingView.png */; };
+		3670F6B3179B1CB300EA5C21 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3670F6B1179B1CB300EA5C21 /* DetailViewController.m */; };
+		3670F6B4179B1CB300EA5C21 /* DetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3670F6B2179B1CB300EA5C21 /* DetailViewController.xib */; };
 		369BA25C178CD4CD009C495F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 369BA25B178CD4CD009C495F /* UIKit.framework */; };
 		369BA25E178CD4CD009C495F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 369BA25D178CD4CD009C495F /* Foundation.framework */; };
 		369BA260178CD4CD009C495F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 369BA25F178CD4CD009C495F /* CoreGraphics.framework */; };
@@ -46,6 +50,11 @@
 		36465A511790CC1C00744E7A /* AllListingsTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllListingsTableView.h; sourceTree = "<group>"; };
 		36465A521790CC1C00744E7A /* AllListingsTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllListingsTableView.m; sourceTree = "<group>"; };
 		36465A531790CC1D00744E7A /* AllListingsTableView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AllListingsTableView.xib; sourceTree = "<group>"; };
+		3670F6AB179A0D4900EA5C21 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		3670F6AE179A139200EA5C21 /* loadingView.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = loadingView.png; sourceTree = "<group>"; };
+		3670F6B0179B1CB300EA5C21 /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
+		3670F6B1179B1CB300EA5C21 /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
+		3670F6B2179B1CB300EA5C21 /* DetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DetailViewController.xib; sourceTree = "<group>"; };
 		369BA258178CD4CD009C495F /* YelpScraper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YelpScraper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		369BA25B178CD4CD009C495F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		369BA25D178CD4CD009C495F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -75,6 +84,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3670F6AC179A0D4900EA5C21 /* CoreLocation.framework in Frameworks */,
 				369BA25C178CD4CD009C495F /* UIKit.framework in Frameworks */,
 				369BA25E178CD4CD009C495F /* Foundation.framework in Frameworks */,
 				369BA260178CD4CD009C495F /* CoreGraphics.framework in Frameworks */,
@@ -94,6 +104,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3670F6AD179A138B00EA5C21 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				3670F6AE179A139200EA5C21 /* loadingView.png */,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
 		369BA24F178CD4CD009C495F = {
 			isa = PBXGroup;
 			children = (
@@ -116,6 +134,7 @@
 		369BA25A178CD4CD009C495F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3670F6AB179A0D4900EA5C21 /* CoreLocation.framework */,
 				369BA25B178CD4CD009C495F /* UIKit.framework */,
 				369BA25D178CD4CD009C495F /* Foundation.framework */,
 				369BA25F178CD4CD009C495F /* CoreGraphics.framework */,
@@ -138,6 +157,10 @@
 				36465A511790CC1C00744E7A /* AllListingsTableView.h */,
 				36465A521790CC1C00744E7A /* AllListingsTableView.m */,
 				36465A531790CC1D00744E7A /* AllListingsTableView.xib */,
+				3670F6B0179B1CB300EA5C21 /* DetailViewController.h */,
+				3670F6B1179B1CB300EA5C21 /* DetailViewController.m */,
+				3670F6B2179B1CB300EA5C21 /* DetailViewController.xib */,
+				3670F6AD179A138B00EA5C21 /* Images */,
 				369BA262178CD4CD009C495F /* Supporting Files */,
 			);
 			path = YelpScraper;
@@ -254,6 +277,8 @@
 				369BA275178CD4CD009C495F /* MainStoryboard.storyboard in Resources */,
 				36465A50178E51EA00744E7A /* BusinessesTableView.xib in Resources */,
 				36465A551790CC1D00744E7A /* AllListingsTableView.xib in Resources */,
+				3670F6AF179A139200EA5C21 /* loadingView.png in Resources */,
+				3670F6B4179B1CB300EA5C21 /* DetailViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -293,6 +318,7 @@
 				369BA278178CD4CE009C495F /* ViewController.m in Sources */,
 				36465A4F178E51EA00744E7A /* BusinessesTableView.m in Sources */,
 				36465A541790CC1D00744E7A /* AllListingsTableView.m in Sources */,
+				3670F6B3179B1CB300EA5C21 /* DetailViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -354,7 +380,8 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Guy J. Natale (9N3ZFD8BPF)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Guy J. Natale (9N3ZFD8BPF)";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -369,6 +396,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "2ACDC0B0-9AAB-4D19-9439-B824176ADB01";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "2ACDC0B0-9AAB-4D19-9439-B824176ADB01";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;

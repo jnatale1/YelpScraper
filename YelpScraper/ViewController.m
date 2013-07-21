@@ -11,12 +11,66 @@
 #import "AppDelegate.h"
 #import "AllListingsTableView.h"
 
+
 @interface ViewController ()
 
 @end
 
 @implementation ViewController
 @synthesize name,phone,city,address;
+@synthesize currentCity,locationManager;
+
+-(void)getCurrentLocation
+{
+    //get current location
+    locationManager = [[CLLocationManager alloc] init];
+    locationManager.delegate = self;
+    locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
+    [locationManager startUpdatingLocation];
+    locationManager.pausesLocationUpdatesAutomatically = YES;
+    
+    CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+    [geocoder reverseGeocodeLocation:locationManager.location
+                   completionHandler:^(NSArray *placemarks, NSError *error) {
+                       NSLog(@"Completion Handler called!");
+                       
+                       if (error){
+                           NSLog(@"Geocode failed with error: %@", error);
+                           return;
+                           
+                       }
+                       
+                       CLPlacemark *placemark = [placemarks objectAtIndex:0];
+                       
+                       //  NSLog(@"placemark.ISOcountryCode %@",placemark.ISOcountryCode);
+                       //  NSLog(@"placemark.country %@",placemark.country);
+                       //  NSLog(@"placemark.postalCode %@",placemark.postalCode);
+                       //  NSLog(@"placemark.administrativeArea %@",placemark.administrativeArea);
+                       //  NSLog(@"placemark.locality %@",placemark.locality);
+                       //  NSLog(@"placemark.subLocality %@",placemark.subLocality);
+                       //  NSLog(@"placemark.subThoroughfare %@",placemark.subThoroughfare);
+                       
+                       NSString *localCityString = [NSString stringWithFormat:@"%@", placemark.locality];
+                      // NSString *localStateString = [NSString stringWithFormat:@"%@", placemark.administrativeArea];
+                       currentCity.text = [NSString stringWithFormat:@"%@",localCityString];
+                   }]; //end reverse geocode
+} //end getCurrentLocation
+
+-(IBAction)nearMe
+{
+    //save the city
+    cityString = currentCity.text;
+    [[NSUserDefaults standardUserDefaults] setObject:cityString forKey:@"city"];
+    
+    //show activity indicator
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDuration:1.0];
+    loadingView.alpha = 1.0;
+    [UIView commitAnimations];
+    
+    //get the listings
+    [self performSelector:@selector(getAllListings) withObject:nil afterDelay:0.1];
+} //end near me
 
 -(IBAction)callNumber
 {
@@ -34,6 +88,7 @@
                                                [NSString stringWithFormat:@"telprompt://%@",phoneString]]];
 } //end callNumber
 
+//search by city
 -(IBAction)enterDesiredLocation:(id)sender
 {
     UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Enter a City", @"new_list_dialog")
@@ -44,7 +99,9 @@
     [myAlertView addSubview:cityTextField];
     [myAlertView show];
     myAlertView.tag = 1;
-}
+} //enterDesiredLocation
+
+//search by business
 -(IBAction)enterDesiredBusiness:(id)sender
 {
     UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Enter a Business Name", @"new_list_dialog")
@@ -55,19 +112,33 @@
     [myAlertView addSubview:nameTextField];
     [myAlertView show];
     myAlertView.tag = 2;
-}
+} //end enterDesiredBusiness
+
 - (void)alertView:(UIAlertView *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     
     if(actionSheet.tag == 1) {
 
         if(buttonIndex == 1) {
-        if ([cityTextField.text isEqual: @""] || [cityTextField.text isEqual:NULL])
-        {
-            //do nothing
-        }
-        cityString = cityTextField.text;
-        [[NSUserDefaults standardUserDefaults] setObject:cityTextField.text forKey:@"city"];
+            if ([cityTextField.text isEqual: @""] || [cityTextField.text isEqual:NULL])
+            {
+                //do nothing
+            }
+            
+            //save the city
+            cityString = cityTextField.text;
+            [cityTextField resignFirstResponder];
+            [[NSUserDefaults standardUserDefaults] setObject:cityTextField.text forKey:@"city"];
+            
+            //show activity indicator
+            [UIView beginAnimations:nil context:nil];
+            [UIView setAnimationDuration:1.0];
+            loadingView.alpha = 1.0;
+            [UIView commitAnimations];
+            
+            //get the listings
+            [self performSelector:@selector(getAllListings) withObject:nil afterDelay:0.1];
+            
         } //end buttonIndex
     } //end action sheet
     if(actionSheet.tag == 2) {
@@ -93,7 +164,7 @@
 {
     BusinessesTableView *table = [[BusinessesTableView alloc] initWithNibName:@"BusinessesTableView" bundle:nil];
     [self presentViewController:table animated:TRUE completion:nil];
-}
+} //end loadRestaurants
 
 -(void)formatInput
 {
@@ -102,7 +173,7 @@
     cityString = [cityString stringByReplacingOccurrencesOfString:@" " withString:@"-"];
     nameString = [nameString stringByAppendingFormat:@"-%@",cityString];
     [self getRestaurantInfo:nameString];
-}
+} //end formatInput
 
 -(IBAction)getRestaurantInfo:(NSString *)string
 {
@@ -149,6 +220,7 @@
         
         //PRINT TO LABEL
         name.text = [[NSString alloc] initWithString:[tempStringTwo substringFromIndex:31]];
+        [[NSUserDefaults standardUserDefaults] setObject:[[NSString alloc] initWithString:[tempStringTwo substringFromIndex:31]] forKey:@"name"];
     } //end else
     
 } //end getName
@@ -174,6 +246,7 @@
         //PRINT TO LABEL
         phone.text = [[NSString alloc] initWithString:[tempStringTwo substringFromIndex:11]];
         phoneString = phone.text;
+        [[NSUserDefaults standardUserDefaults] setObject:[[NSString alloc] initWithString:[tempStringTwo substringFromIndex:11]] forKey:@"phone"];
     } //end else
     
 } //end getPhone
@@ -198,6 +271,9 @@
         
         //PRINT TO LABEL
         city.text = [[NSString alloc] initWithString:[tempStringTwo substringFromIndex:18]];
+        [[NSUserDefaults standardUserDefaults] setObject:[[NSString alloc] initWithString:[tempStringTwo substringFromIndex:18]] forKey:@"cityState"];
+        
+        
     } //end else
 } //end getCity
 
@@ -221,11 +297,13 @@
         
         //PRINT TO LABEL
         address.text = [[NSString alloc] initWithString:[tempStringTwo substringFromIndex:22]];
+        [[NSUserDefaults standardUserDefaults] setObject:[[NSString alloc] initWithString:[tempStringTwo substringFromIndex:22]] forKey:@"address"];
     } //end else
 } //end getAddress
 
 -(IBAction)getAllListings
 {
+    
     //format city
     NSString *allListingsString = cityString;
     allListingsString = [allListingsString stringByReplacingOccurrencesOfString:@" " withString:@"-"];
@@ -248,9 +326,12 @@
     //fetch results
     [self scrapeAllRestaurants:tempToken];
     
-    //show all listings
-    AllListingsTableView *table = [[AllListingsTableView alloc] initWithNibName:@"AllListingsTableView" bundle:nil];
-    [self presentViewController:table animated:TRUE completion:nil];
+    //show activity indicator
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDuration:1.0];
+    loadingView.alpha = 0.0;
+    [UIView commitAnimations];
+    
 } //end getAllListings
 
 -(void)scrapeAllRestaurants:(NSString *)token
@@ -291,57 +372,39 @@
             [allListingsArray addObject:[NSString stringWithFormat:@"%@",listingString]];
             AppDelegate *appDelegate= (AppDelegate *)[[UIApplication sharedApplication] delegate];
             appDelegate->allListingsArray = allListingsArray;
-          //  NSLog(@"All Listings Array: %@", allListingsArray[0]);
+
             lastPoint = [scanner scanLocation];
         } //end listing not found checker
       } //end else
         i++; //update loop counter
     } // end while loop
-    [self scrapeAllShopping];
+    [self scrapeAllCategories];
 } //end scrapeAllRestaurants
 
--(void)scrapeAllShopping
+-(void)scrapeAllCategories
 {
-    if(counter == 0)
+ 
+    NSArray *categoryArray = [NSArray arrayWithObjects:@"food",@"nightlife",@"shopping",
+                              @"bars",@"mexican",@"chinese",@"japanese",@"beautysvc",
+                              @"automotive",@"health",@"homeservices",@"localservices",
+                              @"arts",@"eventservices",@"active",@"hotelstravel",
+                              @"pets",@"publicservicesgovt",@"localflavor",@"educations",
+                              @"professional",@"realestate",@"financialservices",@"religiousorgs",
+                              @"massmedia",nil];
+    if (counter < [categoryArray count])
     {
-        category = @"food";
+        category = categoryArray[counter];
         lastPoint = 0;
         counter++;
         [self getAllListings];
-    }
-    else if(counter == 1)
-    {
-        category = @"nightlife";
-        lastPoint = 0;
-        counter++;
-        [self getAllListings];
-    }
-    else if(counter == 2)
-    {
-        category = @"shopping";
-        lastPoint = 0;
-        counter++;
-        [self getAllListings];
-    }
-    else if(counter == 3)
-    {
-        category = @"bars";
-        lastPoint = 0;
-        counter++;
-        [self getAllListings];
-    }
-    else if(counter == 4)
-    {
-        category = @"mexican";
-        lastPoint = 0;
-        counter++;
-        [self getAllListings];
-    }
-    
-   // AllListingsTableView *table = [[AllListingsTableView alloc] initWithNibName:@"AllListingsTableView" bundle:nil];
-  //  [self presentViewController:table animated:TRUE completion:nil];
-     
-}
+    } //end if
+    else {
+        
+        //show all listings
+        AllListingsTableView *table = [[AllListingsTableView alloc] initWithNibName:@"AllListingsTableView" bundle:nil];
+        [self presentViewController:table animated:TRUE completion:nil];
+    } //end else
+} //end scrapeAllCategories
 
 -(void)saveSearch
 {
@@ -352,11 +415,14 @@
         appDelegate->searchesArray = searchesArray;
        // NSLog(@"From String: %@", searchesArray[0]);
     } //end name not found checker
-}
+} //end saveSearch
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    //getCurrentLocation
+    [self getCurrentLocation];
     
     //reset scanner
     lastPoint = 0;
@@ -369,20 +435,33 @@
     allListingsArray = [[NSMutableArray alloc] init];
     
 	// Do any additional setup after loading the view, typically from a nib.
-}
+} //end viewDidLoad
 
 -(void)viewDidAppear:(BOOL)animated
 {
-    
+    /*
     //show information on selection from all listings or recents
     if (counter != 0)
     {
+        NSLog(@"RUN!");
         AppDelegate *appDelegate= (AppDelegate *)[[UIApplication sharedApplication] delegate];
         nameString = appDelegate->globalBusinessName;
         if(nameString.length > 0) {[self inputBusiness];}
         counter = 1;
     } //end counter if
+    */
+    
 } //end viewDidAppear
+
+- (void)informationReceived
+{
+    //show information on selection from all listings or recents
+    AppDelegate *appDelegate= (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    nameString = appDelegate->globalBusinessName;
+    cityString = [[NSUserDefaults standardUserDefaults] stringForKey:@"city"];
+    if(nameString.length > 0) {[self inputBusiness];}
+    counter = 1;
+}
 
 - (void)didReceiveMemoryWarning
 {

@@ -15,6 +15,8 @@
     NSMutableArray *allListingsArray; //all listings
     NSString *globalBusinessName; //name of the business
     NSString *globalBusinessCity; //city of the business
+    
+    
 }
 
 @property (strong, nonatomic) UIWindow *window;

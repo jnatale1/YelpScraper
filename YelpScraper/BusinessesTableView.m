@@ -77,10 +77,10 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
-	[cell setText:[searchesArray objectAtIndex:indexPath.row]];
+	cell.textLabel.text = [searchesArray objectAtIndex:indexPath.row];
 	[cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
-	cell.font = [UIFont fontWithName:@"Helvetica-Bold" size:15.0];
-	cell.textColor = [UIColor darkGrayColor];
+	cell.textLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:15.0];
+	cell.textLabel.textColor = [UIColor darkGrayColor];
 	
 	
     return cell;
