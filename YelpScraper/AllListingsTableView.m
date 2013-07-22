@@ -142,9 +142,10 @@
       {
           for (int z = 0; y < [allListingsArray count]; y++,z++)
           {
+            if (z == 8) break; //(8 is the max number of listings yelp will return)
             [allArrays[x] addObject:[allListingsArray objectAtIndex:y]];
-              if (z == 8) break; //(8 is the max number of listings yelp will return)
           } //end for y
+                        NSLog(@"size: %i",[allArrays[x] count]);
       } //end for x
 } //end createArrays
 
@@ -165,8 +166,8 @@
 // Customize the number of rows in the table view.
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
    // return [allListingsArray count];
-    return 8; //there are 8 items in each category
-   // return [[sections objectAtIndex:section] count];
+   // return 8; //there are 8 items in each category
+    return [[sections objectAtIndex:section] count];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {

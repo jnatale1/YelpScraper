@@ -365,8 +365,11 @@
         //replace &#39 html code with an actual '
         NSString *tempStringTwo = [tempStringOne stringByReplacingOccurrencesOfString:@"&#39;" withString:@"'"];
         
+        //replace &amp html code with an actual &
+        NSString *tempStringthree = [tempStringTwo stringByReplacingOccurrencesOfString:@"&amp;" withString:@"and"];
+        
         //add to array
-        listingString = [[NSString alloc] initWithString:[tempStringTwo substringFromIndex:53]];
+        listingString = [[NSString alloc] initWithString:[tempStringthree substringFromIndex:53]];
         if(![listingString isEqualToString:@"Listing not found."])
         {
             [allListingsArray addObject:[NSString stringWithFormat:@"%@",listingString]];
@@ -388,7 +391,7 @@
                               @"bars",@"mexican",@"chinese",@"japanese",@"beautysvc",
                               @"automotive",@"health",@"homeservices",@"localservices",
                               @"arts",@"eventservices",@"active",@"hotelstravel",
-                              @"pets",@"publicservicesgovt",@"localflavor",@"educations",
+                              @"pets",@"publicservicesgovt",@"localflavor",@"education",
                               @"professional",@"realestate",@"financialservices",@"religiousorgs",
                               @"massmedia",nil];
     if (counter < [categoryArray count])
@@ -423,6 +426,7 @@
     
     //getCurrentLocation
     [self getCurrentLocation];
+    [self performSelector:@selector(getCurrentLocation) withObject:nil afterDelay:2.0];
     
     //reset scanner
     lastPoint = 0;
