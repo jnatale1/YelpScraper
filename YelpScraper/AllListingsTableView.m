@@ -155,13 +155,11 @@
     // Dispose of any resources that can be recreated.
 }
 
-
 #pragma mark Table view methods
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return [headers count];
 }
-
 
 // Customize the number of rows in the table view.
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -173,7 +171,6 @@
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
 	return [headers objectAtIndex:section];
 }
-
 
 // Customize the appearance of table view cells.
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -192,6 +189,7 @@
 
     return cell;
 }
+
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath{
     AppDelegate *appDelegate= (AppDelegate *)[[UIApplication sharedApplication] delegate];
     appDelegate->globalBusinessName = (NSString*)[[sections objectAtIndex:indexPath.section]
@@ -214,7 +212,28 @@
     
     [tableView deselectRowAtIndexPath:[tableView indexPathForSelectedRow] animated:YES];
     [tableView cellForRowAtIndexPath:indexPath].textLabel.textColor = [UIColor lightGrayColor];
-}
+    
+    /*
+    //mark listings that have been called
+    NSMutableArray *cells = [[NSMutableArray alloc] init];
+    for (NSInteger j = 0; j < [tableView numberOfSections]; ++j)
+    {
+        for (NSInteger i = 0; i < [tableView numberOfRowsInSection:j]; ++i)
+        {
+            if ([[tableView cellForRowAtIndexPath:indexPath].textLabel.text isEqual:
+                 [tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:j]].textLabel.text])
+            {
+                [cells addObject:[tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:j]]];
+               [tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:j]].textLabel.textColor = [UIColor lightGrayColor];
+            } //end if
+        } //end inner for
+    } //end outer for
+    for (UITableViewCell *cell in cells)
+    {
+        [cell textLabel].textColor = [UIColor lightGrayColor];
+    }
+    */
+} //end didSelectRowAtIndexPath
 
 -(void)formatNumber
 {
@@ -230,6 +249,6 @@
     //call number
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:
                                                 [NSString stringWithFormat:@"telprompt://%@",phoneString]]];
-}
+} //end formatNumber
 
 @end

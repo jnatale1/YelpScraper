@@ -51,16 +51,34 @@
                        //  NSLog(@"placemark.subThoroughfare %@",placemark.subThoroughfare);
                        
                        NSString *localCityString = [NSString stringWithFormat:@"%@", placemark.locality];
-                      // NSString *localStateString = [NSString stringWithFormat:@"%@", placemark.administrativeArea];
-                       currentCity.text = [NSString stringWithFormat:@"%@",localCityString];
+                       NSString *localStateString = [self codeFromState:[NSString stringWithFormat:@"%@", placemark.administrativeArea]];
+                       currentCity.text = [NSString stringWithFormat:@"%@, %@",localCityString,localStateString];
                    }]; //end reverse geocode
 } //end getCurrentLocation
+
+-(NSString *)codeFromState:(NSString *)state {
+    NSArray *map = [NSArray arrayWithObjects:@"Alabama",@"al", @"Alaska",@"ak",@"Arizona",@"az",@"Arkansas",@"ar",
+                    @"California",@"ca",@"Colorado",@"co",@"Connecticut",@"ct",@"Delaware",@"de",@"District of Columbia",@"dc",
+                    @"Florida",@"fl",@"Georgia",@"ga",@"Hawaii",@"hi",@"Idaho",@"id",@"Illinois",@"il",@"Indiana",@"in",@"Iowa",
+                    @"ia",@"Kansas",@"ks",@"Kentucky",@"ky",@"Louisiana",@"la",@"Maine",@"me",@"Maryland",@"md",@"Massachusetts",@"ma",
+                    @"Michigan",@"mi",@"Minnesota",@"mn",@"Mississippi",@"ms",@"Missouri",@"mo",@"Montana",@"mt",@"Nebraska",@"ne",
+                    @"Nevada",@"nv",@"New Hampshire",@"nh",@"New Jersey",@"nj",@"New Mexico",@"nm",@"New York",@"ny",@"North Carolina",@"nc",
+                    @"North Dakota",@"nd",@"Ohio",@"oh",@"Oklahoma",@"ok",@"Oregon",@"or",@"Pennsylvania",@"pa",@"Rhode Island",@"ri",
+                    @"South Carolina",@"sc",@"South Dakota",@"sd",@"Tennessee",@"tn",@"Texas",@"tx",@"Utah",@"ut",@"Vermont",@"vt",
+                    @"Virginia",@"va",@"Washington",@"wa",@"West Virginia",@"wv",@"Wisconsin",@"wi",@"Wyoming", @"wy", nil];
+    for (int i = 0; i <[map count]; i+=2) {
+        if ([state compare:[map objectAtIndex:i]] == NSOrderedSame) {
+            return [map objectAtIndex:i+1];
+        }
+    }
+    return state;
+}
 
 -(IBAction)nearMe
 {
     //save the city
     cityString = currentCity.text;
-    [[NSUserDefaults standardUserDefaults] setObject:cityString forKey:@"city"];
+    [[NSUserDefaults standardUserDefaults] setObject:[[NSString alloc] initWithString:[cityString substringToIndex:[cityString length]-4]] forKey:@"city"];
     
     //show activity indicator
     [UIView beginAnimations:nil context:nil];
@@ -95,6 +113,7 @@
                                                           message:@"\n" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK", nil];
     cityTextField = [[UITextField alloc] initWithFrame:CGRectMake(12.0, 45.0, 260.0, 25.0)];
     [cityTextField setBackgroundColor:[UIColor whiteColor]];
+    [cityTextField setPlaceholder:@"Example: Las Vegas, nv"];
     [cityTextField becomeFirstResponder];
     [myAlertView addSubview:cityTextField];
     [myAlertView show];
@@ -128,7 +147,7 @@
             //save the city
             cityString = cityTextField.text;
             [cityTextField resignFirstResponder];
-            [[NSUserDefaults standardUserDefaults] setObject:cityTextField.text forKey:@"city"];
+            [[NSUserDefaults standardUserDefaults] setObject:[[NSString alloc] initWithString:[cityString substringToIndex:[cityString length]-4]] forKey:@"city"];
             
             //show activity indicator
             [UIView beginAnimations:nil context:nil];
@@ -307,8 +326,8 @@
     //format city
     NSString *allListingsString = cityString;
     allListingsString = [allListingsString stringByReplacingOccurrencesOfString:@" " withString:@"-"];
-    allListingsString = [allListingsString stringByReplacingOccurrencesOfString:@"," withString:@"-ca"];
-    allListingsString = [allListingsString stringByAppendingString:@"-ca-us"];
+    allListingsString = [allListingsString stringByReplacingOccurrencesOfString:@"," withString:@""];
+    allListingsString = [allListingsString stringByAppendingString:@"-us"];
     
     //set up scanner
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
@@ -426,7 +445,7 @@
     
     //getCurrentLocation
     [self getCurrentLocation];
-    [self performSelector:@selector(getCurrentLocation) withObject:nil afterDelay:2.0];
+    [self performSelector:@selector(getCurrentLocation) withObject:nil afterDelay:10.0];
     
     //reset scanner
     lastPoint = 0;
@@ -440,22 +459,6 @@
     
 	// Do any additional setup after loading the view, typically from a nib.
 } //end viewDidLoad
-
--(void)viewDidAppear:(BOOL)animated
-{
-    /*
-    //show information on selection from all listings or recents
-    if (counter != 0)
-    {
-        NSLog(@"RUN!");
-        AppDelegate *appDelegate= (AppDelegate *)[[UIApplication sharedApplication] delegate];
-        nameString = appDelegate->globalBusinessName;
-        if(nameString.length > 0) {[self inputBusiness];}
-        counter = 1;
-    } //end counter if
-    */
-    
-} //end viewDidAppear
 
 - (void)informationReceived
 {
