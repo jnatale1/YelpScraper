@@ -13,7 +13,7 @@
 @end
 
 @implementation DetailViewController
-@synthesize name,phone,address,city;
+@synthesize information;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -31,7 +31,7 @@
 
 -(IBAction)call
 {
-    NSString *phoneString = phone.text;
+    NSString *phoneString = [[NSUserDefaults standardUserDefaults] stringForKey:@"phone"];
     phoneString = [phoneString stringByReplacingOccurrencesOfString:@"(" withString:@""];
     phoneString = [phoneString stringByReplacingOccurrencesOfString:@")" withString:@""];
     phoneString = [phoneString stringByReplacingOccurrencesOfString:@" " withString:@""];
@@ -46,14 +46,13 @@
 {
     [super viewDidLoad];
     
-    name.text = [[NSUserDefaults standardUserDefaults] stringForKey:@"name"];
-    phone.text = [[NSUserDefaults standardUserDefaults] stringForKey:@"phone"];
-    address.text = [[NSUserDefaults standardUserDefaults] stringForKey:@"address"];
-    city.text = [[NSUserDefaults standardUserDefaults] stringForKey:@"cityState"];
-    [name setEditable:false];
-    [phone setEditable:false];
-    [address setEditable:false];
-    [city setEditable:false];
+    information.text = [NSString stringWithFormat:@"%@\n%@\n%@\n%@",
+                        [[NSUserDefaults standardUserDefaults] stringForKey:@"name"],
+                        [[NSUserDefaults standardUserDefaults] stringForKey:@"phone"],
+                        [[NSUserDefaults standardUserDefaults] stringForKey:@"address"],
+                        [[NSUserDefaults standardUserDefaults] stringForKey:@"cityState"],nil];
+    [information setEditable:false];
+
 
     
     // Do any additional setup after loading the view from its nib.

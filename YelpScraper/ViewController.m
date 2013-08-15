@@ -364,7 +364,7 @@
     //fetch results
     [self scrapeAllRestaurants:tempToken];
     
-    //show activity indicator
+    //hide activity indicator
     [UIView beginAnimations:nil context:nil];
     [UIView setAnimationDuration:1.0];
     loadingView.alpha = 0.0;

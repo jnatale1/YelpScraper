@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "ViewController.h"
+#import <MessageUI/MessageUI.h>
 
-@interface AllListingsTableView : UITableViewController
+@interface AllListingsTableView : UITableViewController <MFMailComposeViewControllerDelegate>
 {
     //table view
     NSMutableArray *allListingsArray;
@@ -47,12 +48,20 @@
     
     //view controller access
     ViewController *viewController;
+    
+    //export to mail
+    NSMutableArray *exportData;
+    UIAlertView *myAlertView;
 
 }
 @property (nonatomic,strong) IBOutlet UILabel *navBarTitle;
 
 //view controller access
 @property (nonatomic,retain) ViewController *viewController;
+
+//export to mail
+-(IBAction)compose:(id)sender;
+-(IBAction)emaildone;
 
 -(IBAction)close;
 

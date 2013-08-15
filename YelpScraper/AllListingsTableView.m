@@ -24,6 +24,107 @@
     
 } //end close
 
+-(IBAction)export
+{
+    //show activity indicator
+    myAlertView = [[UIAlertView alloc] initWithTitle:@"Compiling"
+                                                          message:@"This takes about 5 minutes." delegate:self cancelButtonTitle:nil otherButtonTitles:nil];
+    UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(120.0, 65.0, 50.0, 50.0)];
+    [indicator startAnimating];
+    [myAlertView addSubview:indicator];
+    [myAlertView show];
+    
+    //get the listings
+    [self performSelector:@selector(saveForExport) withObject:nil afterDelay:0.7];
+
+} //end export
+
+-(void)saveForExport
+{
+    AppDelegate *appDelegate= (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    exportData = [[NSMutableArray alloc] init];
+    for (int i = 0; i < [allListingsArray count]; i++)
+    {
+        appDelegate->globalBusinessName = (NSString*)[allListingsArray objectAtIndex:i];
+        [viewController informationReceived];
+        NSLog(@"%@\n%@\n%@\n%@",
+              [[NSUserDefaults standardUserDefaults] stringForKey:@"name"],
+              [[NSUserDefaults standardUserDefaults] stringForKey:@"phone"],
+              [[NSUserDefaults standardUserDefaults] stringForKey:@"address"],
+              [[NSUserDefaults standardUserDefaults] stringForKey:@"cityState"]);
+        [exportData addObject:[NSString stringWithFormat:@"%@\n%@\n%@\n%@",
+                               [[NSUserDefaults standardUserDefaults] stringForKey:@"name"],
+                               [[NSUserDefaults standardUserDefaults] stringForKey:@"phone"],
+                               [[NSUserDefaults standardUserDefaults] stringForKey:@"address"],
+                               [[NSUserDefaults standardUserDefaults] stringForKey:@"cityState"]]];
+    } //end for
+    
+    //hide activity indicator
+    [myAlertView dismissWithClickedButtonIndex:-1 animated:YES];
+    
+    //compose the message
+    [self compose:self];
+    
+} //end saveForExport
+
+-(IBAction)compose:(id)sender {
+    
+    AppDelegate *appDelegate= (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    //email link code
+    MFMailComposeViewController *mailer =
+    [[MFMailComposeViewController alloc] init];
+    //mailer.delegate = self;
+    mailer.mailComposeDelegate = self;
+    [mailer setSubject:[NSString stringWithFormat:@"Yelp data for %@",appDelegate->globalBusinessCity]];
+    NSMutableString *tempString = [[NSMutableString alloc]init];
+    for (NSString *string in exportData)
+    {
+    [tempString appendFormat:@"%@\n\n\n",string];
+    } //end for
+    
+    [mailer setMessageBody:tempString isHTML:NO];
+    
+    [self presentViewController:mailer animated:YES completion:nil];
+} //end compose
+
+#pragma mark -
+#pragma mark MFMailComposeViewControllerDelegate
+
+-(void) mailComposeController: (MFMailComposeViewController*)mailer
+          didFinishWithResult:(MFMailComposeResult)result error: (NSError*) error
+{
+	switch (result)
+	{
+		case MFMailComposeResultCancelled:
+			break;
+		case MFMailComposeResultSaved:
+			break;
+		case MFMailComposeResultSent:
+            break;
+		case MFMailComposeResultFailed:
+			break;
+			
+		default:
+		{
+			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Email Error" message:@"Your message could not be sent due to an unknown error."
+														   delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+			[alert show];
+			//[alert release];
+		} //end default
+			
+			break;
+	}
+	[self dismissViewControllerAnimated:TRUE completion:nil];
+} //end mailComposeController
+
+#pragma mark -
+- (IBAction)emaildone
+{
+    //[self.delegate infoViewControllerDidFinish:self];
+    [self dismissViewControllerAnimated:TRUE completion:nil];
+} //end emailDone
+
+
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
