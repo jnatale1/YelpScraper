@@ -50,6 +50,12 @@
     phone.text = [[NSUserDefaults standardUserDefaults] stringForKey:@"phone"];
     address.text = [[NSUserDefaults standardUserDefaults] stringForKey:@"address"];
     city.text = [[NSUserDefaults standardUserDefaults] stringForKey:@"cityState"];
+    [name setEditable:false];
+    [phone setEditable:false];
+    [address setEditable:false];
+    [city setEditable:false];
+
+    
     // Do any additional setup after loading the view from its nib.
 }
 

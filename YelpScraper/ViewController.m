@@ -54,6 +54,7 @@
                        NSString *localStateString = [self codeFromState:[NSString stringWithFormat:@"%@", placemark.administrativeArea]];
                        currentCity.text = [NSString stringWithFormat:@"%@, %@",localCityString,localStateString];
                    }]; //end reverse geocode
+    
 } //end getCurrentLocation
 
 -(NSString *)codeFromState:(NSString *)state {
@@ -76,6 +77,15 @@
 
 -(IBAction)nearMe
 {
+    
+    //reset scanner
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    [appDelegate->allListingsArray removeAllObjects];
+    lastPoint = 0;
+    counter = 0;
+    category = @"restaurants";
+    
+    
     //save the city
     cityString = currentCity.text;
     [[NSUserDefaults standardUserDefaults] setObject:[[NSString alloc] initWithString:[cityString substringToIndex:[cityString length]-4]] forKey:@"city"];
@@ -118,6 +128,15 @@
     [myAlertView addSubview:cityTextField];
     [myAlertView show];
     myAlertView.tag = 1;
+    
+    //reset scanner
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    [appDelegate->allListingsArray removeAllObjects];
+    lastPoint = 0;
+    counter = 0;
+    category = @"restaurants";
+    
+    
 } //enterDesiredLocation
 
 //search by business

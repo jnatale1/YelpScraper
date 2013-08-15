@@ -10,15 +10,15 @@
 
 @interface DetailViewController : UIViewController
 {
-    IBOutlet UILabel *name;
-    IBOutlet UILabel *phone;
-    IBOutlet UILabel *address;
-    IBOutlet UILabel *city;
+    IBOutlet UITextView *name;
+    IBOutlet UITextView *phone;
+    IBOutlet UITextView *address;
+    IBOutlet UITextView *city;
 }
-@property(nonatomic,strong) IBOutlet UILabel *name;
-@property(nonatomic,strong) IBOutlet UILabel *phone;
-@property(nonatomic,strong) IBOutlet UILabel *address;
-@property(nonatomic,strong) IBOutlet UILabel *city;
+@property(nonatomic,strong) IBOutlet UITextView *name;
+@property(nonatomic,strong) IBOutlet UITextView *phone;
+@property(nonatomic,strong) IBOutlet UITextView *address;
+@property(nonatomic,strong) IBOutlet UITextView *city;
 
 -(IBAction)back;
 

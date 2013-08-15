@@ -21,6 +21,7 @@
 -(IBAction)close
 {
     [self dismissViewControllerAnimated:YES completion:nil];
+    
 } //end close
 
 - (id)initWithStyle:(UITableViewStyle)style
