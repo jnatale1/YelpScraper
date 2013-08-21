@@ -388,7 +388,9 @@
     [scanner setScanLocation:lastPoint];
     
     //find the unique html code BEFORE the news headline
-    [scanner scanUpToString:@"biz-name\" data-hovercard-id=\"" intoString:NULL];
+    //this line is extremely important: it finds the name of the listing itself.
+      //as yelp updates their site, this code may change. update it as necessary.
+    [scanner scanUpToString:@"data-hovercard-id=\"" intoString:NULL];
     
     //find the unique html code AFTER the news headline
     [scanner scanUpToString:@"</a>" intoString:&token];
@@ -407,7 +409,7 @@
         NSString *tempStringthree = [tempStringTwo stringByReplacingOccurrencesOfString:@"&amp;" withString:@"and"];
         
         //add to array
-        listingString = [[NSString alloc] initWithString:[tempStringthree substringFromIndex:53]];
+        listingString = [[NSString alloc] initWithString:[tempStringthree substringFromIndex:43]];
         if(![listingString isEqualToString:@"Listing not found."])
         {
             [allListingsArray addObject:[NSString stringWithFormat:@"%@",listingString]];
@@ -444,6 +446,12 @@
         //show all listings
         AllListingsTableView *table = [[AllListingsTableView alloc] initWithNibName:@"AllListingsTableView" bundle:nil];
         [self presentViewController:table animated:TRUE completion:nil];
+        if (allListingsArray.count == 0) {
+        UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"Attention"
+                                                              message:@"App requires servicing." delegate:self cancelButtonTitle:nil
+                                                              otherButtonTitles:@"Dismiss", nil];
+            [myAlertView show];
+        }
     } //end else
 } //end scrapeAllCategories
 
